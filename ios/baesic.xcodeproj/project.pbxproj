@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* baesicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* baesicTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -20,6 +19,26 @@
 		8F8BA4528EC07D847E76AB5C /* libPods-baesic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E17E5EA220A0AE47B897013 /* libPods-baesic.a */; };
 		CECD19B55A24B1B1EEA76B93 /* libPods-baesic-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4346C0AB1F2CA4B760ED93A /* libPods-baesic-tvOSTests.a */; };
 		D7E9267DB1821CA298CFB9DA /* libPods-baesic-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF31B58B324DAFE2C358088D /* libPods-baesic-tvOS.a */; };
+		2534608E1BBB429DBC739664 /* Alegreya-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 076857D9FBCF49FCB0BFD32C /* Alegreya-Black.ttf */; };
+		378ADBED181A4F21A08044DE /* Alegreya-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4467A4ECAE1B4F84BCA1CE09 /* Alegreya-BlackItalic.ttf */; };
+		0FBE491A0FE547818BF8F6E1 /* Alegreya-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 419F9BF51BA64388B444DD24 /* Alegreya-Bold.ttf */; };
+		144713F4D99C4703B7A26986 /* Alegreya-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCDB6CF4265E4526BD3DAECE /* Alegreya-BoldItalic.ttf */; };
+		B2C88FFBB4E04468BE03AE6C /* Alegreya-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 945B6BF2A3724169932BA2D7 /* Alegreya-ExtraBold.ttf */; };
+		E3CD0804669D4CBC87C545C3 /* Alegreya-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8BE93B44EDBC4A7AAD9A3E4F /* Alegreya-ExtraBoldItalic.ttf */; };
+		6D63AD266D2247C3BC76C0B5 /* Alegreya-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95EC6CE4800B4DCEA0A9178B /* Alegreya-Italic.ttf */; };
+		522D028CB7734EE58352E68D /* Alegreya-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6981BD9149C04DD6BC0F186D /* Alegreya-Medium.ttf */; };
+		1A82B14A3E054DB0B43F4551 /* Alegreya-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A79D7EB93182411D928D06E8 /* Alegreya-MediumItalic.ttf */; };
+		E295539A53864C3D88697DFA /* Alegreya-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DF1CECE7819149B0AA1B4067 /* Alegreya-Regular.ttf */; };
+		C662B7AE57294851A48DD35C /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4ED9C6B6DEAD4723AAC2D840 /* Lato-Black.ttf */; };
+		8B18C00655984B1A9DA445EE /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A41B2A4B22854C74B1BF48C9 /* Lato-BlackItalic.ttf */; };
+		08D2EB6CF648471CA8017A38 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0AAC4637175B48F79D05635D /* Lato-Bold.ttf */; };
+		CB768050B2FA49B18257DE99 /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3A1C994011942CEA951FF8D /* Lato-BoldItalic.ttf */; };
+		5570FB734DF844BDAC85A362 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CFBB2A79C0C24E198A05384A /* Lato-Italic.ttf */; };
+		56DEE9AE409C453CAB4CD387 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 078F3D29FEDA4A5990CA35C6 /* Lato-Light.ttf */; };
+		315CFF97EA8A4F258CB0724A /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 885D0EDB3761478D957060CB /* Lato-LightItalic.ttf */; };
+		9FDFA338BD1D4D96822AF661 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F2DE936DB49C4C57895E01C5 /* Lato-Regular.ttf */; };
+		01F22F34C7524C8683418098 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BEC82F8E310D413CB61EAB75 /* Lato-Thin.ttf */; };
+		90E51AAA45C74F29BAF2C32D /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50786D56D208457DB78D6923 /* Lato-ThinItalic.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +86,26 @@
 		E7690054BE2F16AC3915F7D5 /* Pods-baesic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-baesic.debug.xcconfig"; path = "Target Support Files/Pods-baesic/Pods-baesic.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		076857D9FBCF49FCB0BFD32C /* Alegreya-Black.ttf */ = {isa = PBXFileReference; name = "Alegreya-Black.ttf"; path = "../src/assets/fonts/Alegreya/Alegreya-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4467A4ECAE1B4F84BCA1CE09 /* Alegreya-BlackItalic.ttf */ = {isa = PBXFileReference; name = "Alegreya-BlackItalic.ttf"; path = "../src/assets/fonts/Alegreya/Alegreya-BlackItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		419F9BF51BA64388B444DD24 /* Alegreya-Bold.ttf */ = {isa = PBXFileReference; name = "Alegreya-Bold.ttf"; path = "../src/assets/fonts/Alegreya/Alegreya-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FCDB6CF4265E4526BD3DAECE /* Alegreya-BoldItalic.ttf */ = {isa = PBXFileReference; name = "Alegreya-BoldItalic.ttf"; path = "../src/assets/fonts/Alegreya/Alegreya-BoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		945B6BF2A3724169932BA2D7 /* Alegreya-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Alegreya-ExtraBold.ttf"; path = "../src/assets/fonts/Alegreya/Alegreya-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8BE93B44EDBC4A7AAD9A3E4F /* Alegreya-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; name = "Alegreya-ExtraBoldItalic.ttf"; path = "../src/assets/fonts/Alegreya/Alegreya-ExtraBoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		95EC6CE4800B4DCEA0A9178B /* Alegreya-Italic.ttf */ = {isa = PBXFileReference; name = "Alegreya-Italic.ttf"; path = "../src/assets/fonts/Alegreya/Alegreya-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6981BD9149C04DD6BC0F186D /* Alegreya-Medium.ttf */ = {isa = PBXFileReference; name = "Alegreya-Medium.ttf"; path = "../src/assets/fonts/Alegreya/Alegreya-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A79D7EB93182411D928D06E8 /* Alegreya-MediumItalic.ttf */ = {isa = PBXFileReference; name = "Alegreya-MediumItalic.ttf"; path = "../src/assets/fonts/Alegreya/Alegreya-MediumItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DF1CECE7819149B0AA1B4067 /* Alegreya-Regular.ttf */ = {isa = PBXFileReference; name = "Alegreya-Regular.ttf"; path = "../src/assets/fonts/Alegreya/Alegreya-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4ED9C6B6DEAD4723AAC2D840 /* Lato-Black.ttf */ = {isa = PBXFileReference; name = "Lato-Black.ttf"; path = "../src/assets/fonts/Lato/Lato-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A41B2A4B22854C74B1BF48C9 /* Lato-BlackItalic.ttf */ = {isa = PBXFileReference; name = "Lato-BlackItalic.ttf"; path = "../src/assets/fonts/Lato/Lato-BlackItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0AAC4637175B48F79D05635D /* Lato-Bold.ttf */ = {isa = PBXFileReference; name = "Lato-Bold.ttf"; path = "../src/assets/fonts/Lato/Lato-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F3A1C994011942CEA951FF8D /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; name = "Lato-BoldItalic.ttf"; path = "../src/assets/fonts/Lato/Lato-BoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CFBB2A79C0C24E198A05384A /* Lato-Italic.ttf */ = {isa = PBXFileReference; name = "Lato-Italic.ttf"; path = "../src/assets/fonts/Lato/Lato-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		078F3D29FEDA4A5990CA35C6 /* Lato-Light.ttf */ = {isa = PBXFileReference; name = "Lato-Light.ttf"; path = "../src/assets/fonts/Lato/Lato-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		885D0EDB3761478D957060CB /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; name = "Lato-LightItalic.ttf"; path = "../src/assets/fonts/Lato/Lato-LightItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F2DE936DB49C4C57895E01C5 /* Lato-Regular.ttf */ = {isa = PBXFileReference; name = "Lato-Regular.ttf"; path = "../src/assets/fonts/Lato/Lato-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BEC82F8E310D413CB61EAB75 /* Lato-Thin.ttf */ = {isa = PBXFileReference; name = "Lato-Thin.ttf"; path = "../src/assets/fonts/Lato/Lato-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		50786D56D208457DB78D6923 /* Lato-ThinItalic.ttf */ = {isa = PBXFileReference; name = "Lato-ThinItalic.ttf"; path = "../src/assets/fonts/Lato/Lato-ThinItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +220,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				2F66DFF375E1B799ECEA3E74 /* Pods */,
+				323069CFE0A246D190D76027 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -197,6 +237,34 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		323069CFE0A246D190D76027 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				076857D9FBCF49FCB0BFD32C /* Alegreya-Black.ttf */,
+				4467A4ECAE1B4F84BCA1CE09 /* Alegreya-BlackItalic.ttf */,
+				419F9BF51BA64388B444DD24 /* Alegreya-Bold.ttf */,
+				FCDB6CF4265E4526BD3DAECE /* Alegreya-BoldItalic.ttf */,
+				945B6BF2A3724169932BA2D7 /* Alegreya-ExtraBold.ttf */,
+				8BE93B44EDBC4A7AAD9A3E4F /* Alegreya-ExtraBoldItalic.ttf */,
+				95EC6CE4800B4DCEA0A9178B /* Alegreya-Italic.ttf */,
+				6981BD9149C04DD6BC0F186D /* Alegreya-Medium.ttf */,
+				A79D7EB93182411D928D06E8 /* Alegreya-MediumItalic.ttf */,
+				DF1CECE7819149B0AA1B4067 /* Alegreya-Regular.ttf */,
+				4ED9C6B6DEAD4723AAC2D840 /* Lato-Black.ttf */,
+				A41B2A4B22854C74B1BF48C9 /* Lato-BlackItalic.ttf */,
+				0AAC4637175B48F79D05635D /* Lato-Bold.ttf */,
+				F3A1C994011942CEA951FF8D /* Lato-BoldItalic.ttf */,
+				CFBB2A79C0C24E198A05384A /* Lato-Italic.ttf */,
+				078F3D29FEDA4A5990CA35C6 /* Lato-Light.ttf */,
+				885D0EDB3761478D957060CB /* Lato-LightItalic.ttf */,
+				F2DE936DB49C4C57895E01C5 /* Lato-Regular.ttf */,
+				BEC82F8E310D413CB61EAB75 /* Lato-Thin.ttf */,
+				50786D56D208457DB78D6923 /* Lato-ThinItalic.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -285,7 +353,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 940;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -338,6 +406,26 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				2534608E1BBB429DBC739664 /* Alegreya-Black.ttf in Resources */,
+				378ADBED181A4F21A08044DE /* Alegreya-BlackItalic.ttf in Resources */,
+				0FBE491A0FE547818BF8F6E1 /* Alegreya-Bold.ttf in Resources */,
+				144713F4D99C4703B7A26986 /* Alegreya-BoldItalic.ttf in Resources */,
+				B2C88FFBB4E04468BE03AE6C /* Alegreya-ExtraBold.ttf in Resources */,
+				E3CD0804669D4CBC87C545C3 /* Alegreya-ExtraBoldItalic.ttf in Resources */,
+				6D63AD266D2247C3BC76C0B5 /* Alegreya-Italic.ttf in Resources */,
+				522D028CB7734EE58352E68D /* Alegreya-Medium.ttf in Resources */,
+				1A82B14A3E054DB0B43F4551 /* Alegreya-MediumItalic.ttf in Resources */,
+				E295539A53864C3D88697DFA /* Alegreya-Regular.ttf in Resources */,
+				C662B7AE57294851A48DD35C /* Lato-Black.ttf in Resources */,
+				8B18C00655984B1A9DA445EE /* Lato-BlackItalic.ttf in Resources */,
+				08D2EB6CF648471CA8017A38 /* Lato-Bold.ttf in Resources */,
+				CB768050B2FA49B18257DE99 /* Lato-BoldItalic.ttf in Resources */,
+				5570FB734DF844BDAC85A362 /* Lato-Italic.ttf in Resources */,
+				56DEE9AE409C453CAB4CD387 /* Lato-Light.ttf in Resources */,
+				315CFF97EA8A4F258CB0724A /* Lato-LightItalic.ttf in Resources */,
+				9FDFA338BD1D4D96822AF661 /* Lato-Regular.ttf in Resources */,
+				01F22F34C7524C8683418098 /* Lato-Thin.ttf in Resources */,
+				90E51AAA45C74F29BAF2C32D /* Lato-ThinItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
