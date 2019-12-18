@@ -32,6 +32,13 @@ const TextStyles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 21,
   },
+  Button: {
+    fontFamily: 'Lato-Regular',
+    fontSize: 14,
+    lineHeight: 17,
+    fontWeight: '900',
+    color: Colors.black2,
+  },
 });
 
 export default TextStyles;
