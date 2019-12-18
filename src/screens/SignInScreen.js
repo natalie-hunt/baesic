@@ -5,7 +5,7 @@ import { Button, View } from 'react-native';
 const SignInScreen = ({ navigation }) => {
   const signIn = async () => {
     await AsyncStorage.setItem('userToken', 'signed in');
-    navigation.navigate('App');
+    navigation.navigate('Onboarding');
   };
 
   return (
