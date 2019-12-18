@@ -12,9 +12,16 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { AuthLoadingScreen, SignInScreen, HomeScreen, GetStartedScreen, QuestionOneScreen, QuestionTwoScreen, QuestionThreeScreen, QuestionFourScreen } from '@screens';
 import { Animated, Easing } from 'react-native'
 
-const AppStack = createStackNavigator({
-  Home: HomeScreen,
-});
+const AppStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+  },
+  {
+    defaultNavigationOptions: {
+      header: null,
+    },
+  },
+);
 
 const AuthStack = createStackNavigator({
   SignIn: SignInScreen,
