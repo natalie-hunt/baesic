@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View } from 'react-native';
+import { Button, View, SafeAreaView } from 'react-native';
 import { Colors, TextStyles } from '@style';
 import { StyleSheet } from 'react-native';
 
@@ -8,6 +8,7 @@ const QuestionThreeScreen = ({ navigation }) => {
     const styles = StyleSheet.create({
         container: {
             backgroundColor: Colors.black1,
+            flex: 1
         }
     });
 
@@ -20,10 +21,13 @@ const QuestionThreeScreen = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <Button title="Go to Question Four" onPress={goForward} />
-            <Button title="Back to Question Two" onPress={goBack} />
-        </View>
+        <SafeAreaView style={styles.container}>
+            <View>
+                <Button title="Go to Question Four" onPress={goForward} />
+                <Button title="Back to Question Two" onPress={goBack} />
+            </View>
+        </SafeAreaView>
+
     );
 };
 
