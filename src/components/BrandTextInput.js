@@ -11,22 +11,21 @@ const BrandTextInput = ({
   label,
   value,
   onChangeValue,
-  placeholder,
+  isPassword = false,
   style,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
+  const shouldShowLabel = () => {
+    return isFocused || value !== '';
+  };
 
   return (
     <KeyboardAvoidingView
       behavior="position"
       keyboardVerticalOffset={20}
       style={[styles.container, style]}>
-      <Text
-        style={[
-          styles.label,
-          isFocused ? styles.highlight : { display: 'none' },
-        ]}>
-        {label.toUpperCase()}
+      <Text style={[styles.label, isFocused ? styles.highlight : null]}>
+        {shouldShowLabel() ? label.toUpperCase() : ''}
       </Text>
       <TextInput
         style={[styles.input, isFocused ? styles.highlight : null]}
@@ -34,9 +33,10 @@ const BrandTextInput = ({
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         value={value}
-        placeholder={placeholder}
+        placeholder={label}
         placeholderTextColor={Colors.black4}
         selectionColor={Colors.offWhite2}
+        secureTextEntry={isPassword}
       />
     </KeyboardAvoidingView>
   );
