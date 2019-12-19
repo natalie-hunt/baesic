@@ -26,6 +26,7 @@ const SignInScreen = ({ navigation }) => {
       const { jwt, user } = jsonResponse;
       if (user?.confirmed) {
         await AsyncStorage.setItem('userToken', jwt);
+        await AsyncStorage.setItem('user', JSON.stringify(user));
         navigation.navigate('Onboarding');
       } else {
         throw Error;
