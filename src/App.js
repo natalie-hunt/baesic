@@ -14,14 +14,10 @@ import {
   SignInScreen,
   SignUpScreen,
   HomeScreen,
-  GetStartedScreen,
-  QuestionOneScreen,
-  QuestionTwoScreen,
-  QuestionThreeScreen,
-  QuestionFourScreen,
 } from '@screens';
 import { Animated, Easing } from 'react-native';
 import { WelcomeScreen } from './screens';
+import OnboardingScreen from './screens/OnboardingScreen';
 
 const AppStack = createStackNavigator(
   {
@@ -39,50 +35,12 @@ const AuthStack = createStackNavigator(
     Welcome: WelcomeScreen,
     SignIn: SignInScreen,
     SignUp: SignUpScreen,
+    Onboarding: OnboardingScreen,
   },
   {
     defaultNavigationOptions: {
       header: null,
     },
-  },
-);
-
-const OnboardingStack = createStackNavigator(
-  {
-    GetStarted: {
-      screen: GetStartedScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    QuestionOne: {
-      screen: QuestionOneScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    QuestionTwo: {
-      screen: QuestionTwoScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    QuestionThree: {
-      screen: QuestionThreeScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    QuestionFour: {
-      screen: QuestionFourScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
-  },
-  {
-    initialRouteName: 'GetStarted',
-    transitionConfig: () => transitionConfig(),
   },
 );
 
@@ -119,7 +77,6 @@ const AppContainer = createAppContainer(
       AuthLoading: AuthLoadingScreen,
       App: AppStack,
       Auth: AuthStack,
-      Onboarding: OnboardingStack,
     },
     {
       initialRouteName: 'AuthLoading',
