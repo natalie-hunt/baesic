@@ -6,23 +6,23 @@ const BrandButton = ({ title, onPress, variant, style }) => {
   const getVariantColorScheme = variant => {
     if (variant === 'primary') {
       return {
-        backgroundColor: Colors.cream,
-        textColor: Colors.black,
+        backgroundColor: Colors.offWhite2,
+        textColor: Colors.black2,
       };
     } else if (variant === 'secondary') {
       return {
-        backgroundColor: Colors.black,
-        textColor: Colors.gray,
+        backgroundColor: Colors.black1,
+        textColor: Colors.black4,
       };
     } else if (variant === 'tertiary') {
       return {
-        backgroundColor: Colors.gray,
-        textColor: Colors.tan,
+        backgroundColor: Colors.offWhite1,
+        textColor: Colors.black3,
       };
     } else {
       return {
-        backgroundColor: Colors.cream,
-        textColor: Colors.black,
+        backgroundColor: Colors.offWhite2,
+        textColor: Colors.black2,
       };
     }
   };

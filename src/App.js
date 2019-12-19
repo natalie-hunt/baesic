@@ -9,8 +9,17 @@
 import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { AuthLoadingScreen, SignInScreen, HomeScreen, GetStartedScreen, QuestionOneScreen, QuestionTwoScreen, QuestionThreeScreen, QuestionFourScreen } from '@screens';
-import { Animated, Easing } from 'react-native'
+import {
+  AuthLoadingScreen,
+  SignInScreen,
+  HomeScreen,
+  GetStartedScreen,
+  QuestionOneScreen,
+  QuestionTwoScreen,
+  QuestionThreeScreen,
+  QuestionFourScreen,
+} from '@screens';
+import { Animated, Easing } from 'react-native';
 
 const AppStack = createStackNavigator(
   {
@@ -39,25 +48,25 @@ const OnboardingStack = createStackNavigator(
       screen: QuestionOneScreen,
       navigationOptions: {
         header: null,
-      }
+      },
     },
     QuestionTwo: {
       screen: QuestionTwoScreen,
       navigationOptions: {
         header: null,
-      }
+      },
     },
     QuestionThree: {
       screen: QuestionThreeScreen,
       navigationOptions: {
         header: null,
-      }
+      },
     },
     QuestionFour: {
       screen: QuestionFourScreen,
       navigationOptions: {
         header: null,
-      }
+      },
     },
   },
   {
@@ -91,7 +100,7 @@ const transitionConfig = () => {
       return { opacity, transform: [{ translateY }] };
     },
   };
-}
+};
 
 const AppContainer = createAppContainer(
   createSwitchNavigator(
@@ -99,7 +108,7 @@ const AppContainer = createAppContainer(
       AuthLoading: AuthLoadingScreen,
       App: AppStack,
       Auth: AuthStack,
-      Onboarding: OnboardingStack
+      Onboarding: OnboardingStack,
     },
     {
       initialRouteName: 'AuthLoading',
