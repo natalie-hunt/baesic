@@ -16,7 +16,7 @@ const BrandTextInput = ({
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const shouldShowLabel = () => {
-    return isFocused && value !== '';
+    return isFocused || value !== '';
   };
 
   return (
