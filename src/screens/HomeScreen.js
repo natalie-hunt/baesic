@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import { View, StyleSheet, StatusBar } from 'react-native';
-import { BrandButton, BrandTextInput } from '@components';
-import { Colors } from '@style';
+import { View, Text, StyleSheet, StatusBar } from 'react-native';
+import { BrandButton, BrandTextInput, BrandSlider } from '@components';
+import { TextStyles, Colors } from '@style';
 
 const HomeScreen = ({ navigation }) => {
   const signOut = async () => {
@@ -11,6 +11,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const [myText, setMyText] = useState('');
+  const [mySliderValue, setMySliderValue] = useState(0.5);
 
   return (
     <View>
@@ -19,9 +20,14 @@ const HomeScreen = ({ navigation }) => {
         <BrandButton title="Sign Out" onPress={signOut} variant="primary" />
         <BrandTextInput
           label="Label"
-          input={myText}
-          setInput={setMyText}
+          value={myText}
+          onChangeValue={setMyText}
           placeholder="My placeholder"
+        />
+        <BrandSlider
+          value={mySliderValue}
+          onValueChange={setMySliderValue}
+          labels={['First', 'Middle', 'Last']}
         />
       </View>
     </View>
