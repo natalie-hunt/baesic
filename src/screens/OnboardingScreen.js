@@ -1,5 +1,6 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import AppleHealthKit from 'rn-apple-healthkit';
+import RNCalendarEvents from 'react-native-calendar-events';
 import {
   View,
   Text,
@@ -97,7 +98,9 @@ const OnboardingScreen = ({ navigation }) => {
   }, []);
 
   const [steps, setSteps] = useState(0);
+  const [events, setEvents] = useState(0);
   const [sleepHours, setSleepHours] = useState(0);
+
   const connectHealthKit = () => {
     const PERMS = AppleHealthKit.Constants.Permissions;
     const options = {
@@ -116,8 +119,10 @@ const OnboardingScreen = ({ navigation }) => {
       }
 
       AppleHealthKit.getStepCount(null, (err, results) => {
-        console.log(results);
-        setSteps(results.value);
+        console.log('AppleHealthKit', results);
+        if(results) {
+          setSteps(results.value);
+        }
       });
 
       let yesterday = new Date();
@@ -136,6 +141,22 @@ const OnboardingScreen = ({ navigation }) => {
       })
     });
   }
+
+  const connectCalendars = () => {
+    RNCalendarEvents.authorizationStatus().then(status => {
+      console.log('status', status);
+      if(status == 'undetermined') {
+        RNCalendarEvents.authorizeEventStore().then(u => console.log(u));
+      }
+      if(status == 'authorized') {
+        RNCalendarEvents.fetchAllEvents(new Date(), new Date(), []).then(events => {
+          setEvents(events.length);
+          console.log('events', events);
+        });
+      }
+    });
+  };
+
 
   const [busyAnswer, setBusyAnswer] = useState(0);
   const [activityAnswer, setActivityAnswer] = useState(0);
@@ -269,12 +290,13 @@ const OnboardingScreen = ({ navigation }) => {
                 "Gotta know when you're busy in order to know when you should get busy!"
               }
               checked={checkedItems.calendar}
-              onPress={() =>
+              onPress={() => {
                 setCheckedItems({
                   ...checkedItems,
                   calendar: !checkedItems.calendar,
-                })
-              }
+                });
+                connectCalendars();
+              }}
             />
           </View>
           <Text style={[TextStyles.B1, { marginTop: 29 }]}>
@@ -370,6 +392,8 @@ const OnboardingScreen = ({ navigation }) => {
         baeConfirmed: baeConfirmed,
         steps: steps,
         sleep: sleepHours,
+        events: events
+
       }),
     };
     try {

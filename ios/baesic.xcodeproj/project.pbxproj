@@ -10,6 +10,7 @@
 		00E356F31AD99517003FC87E /* baesicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* baesicTests.m */; };
 		01F22F34C7524C8683418098 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BEC82F8E310D413CB61EAB75 /* Lato-Thin.ttf */; };
 		08D2EB6CF648471CA8017A38 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0AAC4637175B48F79D05635D /* Lato-Bold.ttf */; };
+		093737EF23ACCA8200E31B47 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 093737EE23ACCA8100E31B47 /* EventKit.framework */; };
 		0FBE491A0FE547818BF8F6E1 /* Alegreya-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 419F9BF51BA64388B444DD24 /* Alegreya-Bold.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
@@ -67,6 +68,7 @@
 		00E356F21AD99517003FC87E /* baesicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = baesicTests.m; sourceTree = "<group>"; };
 		076857D9FBCF49FCB0BFD32C /* Alegreya-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Alegreya-Black.ttf"; path = "../src/assets/fonts/Alegreya/Alegreya-Black.ttf"; sourceTree = "<group>"; };
 		078F3D29FEDA4A5990CA35C6 /* Lato-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Light.ttf"; path = "../src/assets/fonts/Lato/Lato-Light.ttf"; sourceTree = "<group>"; };
+		093737EE23ACCA8100E31B47 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		0AAC4637175B48F79D05635D /* Lato-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Bold.ttf"; path = "../src/assets/fonts/Lato/Lato-Bold.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* baesic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = baesic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = baesic/AppDelegate.h; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				093737EF23ACCA8200E31B47 /* EventKit.framework in Frameworks */,
 				8F8BA4528EC07D847E76AB5C /* libPods-baesic.a in Frameworks */,
 				E063A20423AC99B200D2017E /* HealthKit.framework in Frameworks */,
 			);
@@ -200,6 +203,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				093737EE23ACCA8100E31B47 /* EventKit.framework */,
 				E063A20323AC99B200D2017E /* HealthKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
