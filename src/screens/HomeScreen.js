@@ -19,7 +19,7 @@ const HomeScreen = ({ navigation }) => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + jwt
+        Authorization: 'Bearer ' + _jwt
       },
       body: JSON.stringify({ baephone})
     };
