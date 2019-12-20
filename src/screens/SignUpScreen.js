@@ -21,6 +21,7 @@ const SignUpScreen = ({ navigation }) => {
       },
       body: JSON.stringify({
         email: email,
+        username: email,
         password: password,
         phone: number,
         name: name,
@@ -35,7 +36,7 @@ const SignUpScreen = ({ navigation }) => {
       const { jwt, user } = jsonResponse;
       if (user?.confirmed) {
         await AsyncStorage.setItem('userToken', jwt);
-        navigation.navigate('Onboarding');
+        navigation.navigate('Onboarding', { user: user, name: name });
       } else {
         throw Error;
       }

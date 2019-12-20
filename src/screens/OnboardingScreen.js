@@ -1,5 +1,12 @@
 import React, { useState, useReducer, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, StatusBar } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  StatusBar,
+  AsyncStorage,
+} from 'react-native';
 import { TextStyles, Colors } from '@style';
 import {
   ProgressIndicator,
@@ -8,35 +15,76 @@ import {
   RadioOption,
   Checkbox,
 } from '@components';
-import { BrandTextInput } from '../components';
+import { BrandTextInput, BrandButton } from '../components';
 
 const OnboardingScreen = ({ navigation }) => {
   const name = navigation.getParam('name');
+  const initialUserData = navigation.getParam('user');
 
   const [loveLanguages, setLoveLanguages] = useState([]);
   useEffect(() => {
     const fetchLangauges = async () => {
+      const jwt = await AsyncStorage.getItem('userToken');
       const url = 'http://10.1.10.163:1337/languages';
       const payload = {
         method: 'GET',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwt}`,
         },
       };
-      const response = await fetch(url, payload);
-      const jsonResponse = await response.json();
-      setLoveLanguages(
-        jsonResponse.map(language => {
-          return {
-            ...language,
-            selected: false,
-          };
-        }),
-      );
+      try {
+        const response = await fetch(url, payload);
+        const jsonResponse = await response.json();
+        setLoveLanguages(
+          jsonResponse.map(language => {
+            return {
+              ...language,
+              selected: false,
+            };
+          }),
+        );
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     fetchLangauges();
+  }, []);
+
+  const [userWasInvited, setUserWasInvited] = useState(undefined);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const jwt = await AsyncStorage.getItem('userToken');
+      const url = 'http://10.1.10.163:1337/users';
+      const payload = {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwt}`,
+        },
+      };
+      try {
+        const response = await fetch(url, payload);
+        const jsonResponse = await response.json();
+        const inviters = jsonResponse.filter(
+          u => u.baephone === initialUserData.phone,
+        );
+        if (inviters.length > 0) {
+          setBaenumber(inviters[0].number);
+          setUserWasInvited(true);
+        } else {
+          setUserWasInvited(false);
+        }
+      } catch (error) {
+        setUserWasInvited(false);
+        console.log(error);
+      }
+    };
+
+    fetchUsers();
   }, []);
 
   const [busyAnswer, setBusyAnswer] = useState(5);
@@ -47,9 +95,9 @@ const OnboardingScreen = ({ navigation }) => {
     calendar: false,
   });
   const [twitterHandle, setTwitterHandle] = useState('');
-  console.log('love: ', loveLanguages);
+  const [baephone, setBaephone] = useState('');
 
-  const questions = [
+  let questions = [
     {
       progressIndicatorStep: [true, false, false, false, false],
       render: (
@@ -194,7 +242,39 @@ const OnboardingScreen = ({ navigation }) => {
         </View>
       ),
     },
+    {
+      progressIndicatorStep: [false, false, false, false, true],
+      render: (
+        <View style={styles.sliderQuestionContainer}>
+          <View>
+            <Text style={TextStyles.H2}>
+              Last step! Let's put the BAE in BaeWatch.
+            </Text>
+            <Text style={TextStyles.B1}>
+              Invite your partner so I can compare your moods and needs, and
+              help you both find moments to connect.
+            </Text>
+          </View>
+          <BrandTextInput
+            label={"What's bae's cell?"}
+            value={baephone}
+            onChangeValue={setBaephone}
+          />
+        </View>
+      ),
+    },
   ];
+
+  if (userWasInvited) {
+    // don't need the last question
+    questions.pop();
+    questions = questions.map(q => {
+      return {
+        ...q,
+        progressIndicatorStep: q.progressIndicatorStep.slice(0, -1),
+      };
+    });
+  }
 
   const reducer = (state, action) => {
     switch (action.type) {
@@ -220,6 +300,47 @@ const OnboardingScreen = ({ navigation }) => {
   };
   const [progressState, dispatch] = useReducer(reducer, initialProgressState);
 
+  const submit = async () => {
+    const jwt = await AsyncStorage.getItem('userToken');
+    const url = `http://10.1.10.163:1337/users/${initialUserData.id}`;
+    const payload = {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+      body: JSON.stringify({
+        twitter: twitterHandle,
+        activity: activityAnswer,
+        busy: busyAnswer,
+        languages: loveLanguages.filter(l => l.selected)[0],
+        baephone: baephone,
+      }),
+    };
+    try {
+      const response = await fetch(url, payload);
+      const jsonResponse = await response.json();
+      console.log(jsonResponse);
+      if (jsonResponse.confirmed) {
+        console.log('success');
+      } else {
+        throw Error;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const submitButton = () => {
+    const title = userWasInvited ? 'Done' : 'Invite your bae';
+    if (progressState.screenNumber === questions.length - 1) {
+      return <BrandButton variant="primary" title={title} onPress={submit} />;
+    } else {
+      return null;
+    }
+  };
+
   return (
     <View>
       <StatusBar barStyle={'light-content'} />
@@ -230,23 +351,30 @@ const OnboardingScreen = ({ navigation }) => {
               style={styles.bae}
               source={require('@assets/images/bae.png')}
             />
-            <ProgressIndicator progress={questions[progressState.screenNumber].progressIndicatorStep} />
+            <ProgressIndicator
+              progress={
+                questions[progressState.screenNumber].progressIndicatorStep
+              }
+            />
           </View>
           <View style={styles.questionContainer}>
             {questions[progressState.screenNumber].render}
           </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <ArrowButton
-            highlight={false}
-            orientation="up"
-            onPress={() => dispatch({ type: 'goBackward' })}
-          />
-          <ArrowButton
-            highlight={true}
-            orientation="down"
-            onPress={() => dispatch({ type: 'goForward' })}
-          />
+        <View style={styles.lowerContainer}>
+          <View style={{ flexGrow: 1 }}>{submitButton()}</View>
+          <View style={styles.buttonContainer}>
+            <ArrowButton
+              highlight={progressState.screenNumber > 0}
+              orientation="up"
+              onPress={() => dispatch({ type: 'goBackward' })}
+            />
+            <ArrowButton
+              highlight={progressState.screenNumber < questions.length - 1}
+              orientation="down"
+              onPress={() => dispatch({ type: 'goForward' })}
+            />
+          </View>
         </View>
       </View>
     </View>
@@ -273,10 +401,16 @@ const styles = StyleSheet.create({
     height: 294,
     justifyContent: 'space-between',
   },
+  lowerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 36,
+  },
   buttonContainer: {
     height: 80,
+    marginLeft: 24,
     justifyContent: 'space-between',
-    marginBottom: 36,
     alignItems: 'flex-end',
   },
   bae: {
