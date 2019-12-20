@@ -166,7 +166,6 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
 
-
   const connectHealthKit = () => {
     const PERMS = AppleHealthKit.Constants.Permissions;
     const options = {
