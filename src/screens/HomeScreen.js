@@ -157,10 +157,10 @@ const HomeScreen = ({ navigation }) => {
   
   useEffect(() => {
     const doCheck = async () => {
+      await connectCalendars();
+      connectHealthKit();
       await checkBaeConfirmation();
       await fetchScore();
-      connectCalendars();
-      connectHealthKit();
     };
     doCheck();
   }, []);
