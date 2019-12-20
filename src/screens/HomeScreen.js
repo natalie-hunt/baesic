@@ -1,4 +1,6 @@
 import React, { useState , useEffect } from 'react';
+import AppleHealthKit from 'rn-apple-healthkit';
+import RNCalendarEvents from 'react-native-calendar-events';
 import AsyncStorage from '@react-native-community/async-storage';
 import { View, Text, Image, StyleSheet, StatusBar } from 'react-native';
 import { BrandButton, BrandTextInput } from '@components';
@@ -9,6 +11,10 @@ const HomeScreen = ({ navigation }) => {
   let [baephone, setBaephone] = useState('');
   let [user, setUser] = useState({});
   let [jwt, setJwt] = useState('');
+  const [steps, setSteps] = useState(0);
+  const [events, setEvents] = useState(0);
+  const [sleepHours, setSleepHours] = useState(0);
+
   const [goStatus, setGoStatus] = useState('maybe');
   const allCopy = {
     no: {
@@ -110,6 +116,40 @@ const HomeScreen = ({ navigation }) => {
     }
   }
 
+  const updateUser = async () => {
+    connectHealthKit();
+    connectCalendars();
+
+    const jwt = await AsyncStorage.getItem('userToken');
+    const url = `http://10.1.10.163:1337/users/${user.id}`;
+    const payload = {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+      body: JSON.stringify({
+        steps: steps,
+        sleep: sleepHours,
+        events: events
+      }),
+    };
+    try {
+      const response = await fetch(url, payload);
+      const jsonResponse = await response.json();
+      console.log(jsonResponse);
+      if (jsonResponse.confirmed) {
+        console.log('success');
+        console.log(jsonResponse);
+      } else {
+        throw Error;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const signOut = async () => {
     await AsyncStorage.clear();
     navigation.navigate('Auth');
@@ -119,9 +159,69 @@ const HomeScreen = ({ navigation }) => {
     const doCheck = async () => {
       await checkBaeConfirmation();
       await fetchScore();
+      connectCalendars();
+      connectHealthKit();
     };
     doCheck();
   }, []);
+
+
+
+  const connectHealthKit = () => {
+    const PERMS = AppleHealthKit.Constants.Permissions;
+    const options = {
+      permissions: {
+        read: [
+          PERMS.StepCount,
+          PERMS.SleepAnalysis,
+        ],
+      },
+    };
+
+    AppleHealthKit.initHealthKit(options, (err, results) => {
+      if (err) {
+        console.log('error initializing Healthkit: ', err);
+        return;
+      }
+
+      AppleHealthKit.getStepCount(null, (err, results) => {
+        console.log('AppleHealthKit', results);
+        if(results) {
+          setSteps(results.value);
+        }
+      });
+
+      let yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const sleepOptions = {
+        startDate: (yesterday).toISOString(),
+        endDate: (new Date()).toISOString(),
+      };
+      AppleHealthKit.getSleepSamples(sleepOptions, (err, results) => {
+        if (err) {
+          console.log('error reading sleep data: ', err);
+          return;
+        }
+
+        console.log(results);
+      })
+    });
+  }
+
+  const connectCalendars = () => {
+    RNCalendarEvents.authorizationStatus().then(status => {
+      console.log('status', status);
+      if(status == 'undetermined') {
+        RNCalendarEvents.authorizeEventStore().then(u => console.log(u));
+      }
+      if(status == 'authorized') {
+        RNCalendarEvents.fetchAllEvents(new Date(), new Date(), []).then(events => {
+          setEvents(events.length);
+          console.log('events', events);
+        });
+      }
+    });
+  };
 
   return !user.baeConfirmed ? (
     <View>
@@ -163,7 +263,7 @@ const HomeScreen = ({ navigation }) => {
           <Text style={TextStyles.H2}>My Advice</Text>
           <Text style={TextStyles.B1}>Coming soon...</Text>
         </View>
-        <BrandButton title="Refresh" onPress={fetchScore} variant="secondary" style={{marginTop: 64}}/>
+        <BrandButton title="Refresh" onPress={() => { updateUser(); fetchScore(); }} variant="secondary" style={{marginTop: 64}}/>
         <BrandButton title="Sign Out" onPress={signOut} variant="secondary" style={{marginTop: 24}}/>
       </View>
     </View>
