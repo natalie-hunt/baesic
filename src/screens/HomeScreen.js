@@ -121,7 +121,7 @@ const HomeScreen = ({ navigation }) => {
     connectCalendars();
 
     const jwt = await AsyncStorage.getItem('userToken');
-    const url = `http://10.1.10.163:1337/users/${user.id}`;
+    const url = `http://10.1.10.163:1337/users/${user._id}`;
     const payload = {
       method: 'PUT',
       headers: {
@@ -164,7 +164,6 @@ const HomeScreen = ({ navigation }) => {
     };
     doCheck();
   }, []);
-
 
 
   const connectHealthKit = () => {
