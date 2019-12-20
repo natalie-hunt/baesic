@@ -1,37 +1,105 @@
 import React, { useState, useReducer, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, StatusBar } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  StatusBar,
+  AsyncStorage,
+} from 'react-native';
 import { TextStyles, Colors } from '@style';
-import { ProgressIndicator, ArrowButton, BrandSlider } from '@components';
-import { StackViewStyleInterpolator } from 'react-navigation-stack';
+import {
+  ProgressIndicator,
+  ArrowButton,
+  BrandSlider,
+  RadioOption,
+  Checkbox,
+} from '@components';
+import { BrandTextInput, BrandButton } from '../components';
 
 const OnboardingScreen = ({ navigation }) => {
   const name = navigation.getParam('name');
+  const initialUserData = navigation.getParam('user');
 
   const [loveLanguages, setLoveLanguages] = useState([]);
-  const fetchLanguages = useEffect(() => {
-    const doFetch = async () => {
+  useEffect(() => {
+    const fetchLangauges = async () => {
+      const jwt = await AsyncStorage.getItem('userToken');
       const url = 'http://10.1.10.163:1337/languages';
       const payload = {
         method: 'GET',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwt}`,
         },
       };
-      const response = await fetch(url, payload);
-      const jsonResponse = await response.json();
-      setLoveLanguages(jsonResponse);
+      try {
+        const response = await fetch(url, payload);
+        const jsonResponse = await response.json();
+        setLoveLanguages(
+          jsonResponse.map(language => {
+            return {
+              ...language,
+              selected: false,
+            };
+          }),
+        );
+      } catch (error) {
+        console.log(error);
+      }
     };
 
-    doFetch();
+    fetchLangauges();
+  }, []);
+
+  const [userWasInvited, setUserWasInvited] = useState(undefined);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const jwt = await AsyncStorage.getItem('userToken');
+      const url = 'http://10.1.10.163:1337/users';
+      const payload = {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwt}`,
+        },
+      };
+      try {
+        const response = await fetch(url, payload);
+        const jsonResponse = await response.json();
+        const inviters = jsonResponse.filter(
+          u => u.baephone === initialUserData.phone,
+        );
+        if (inviters.length > 0) {
+          setBaenumber(inviters[0].number);
+          setUserWasInvited(true);
+        } else {
+          setUserWasInvited(false);
+        }
+      } catch (error) {
+        setUserWasInvited(false);
+        console.log(error);
+      }
+    };
+
+    fetchUsers();
   }, []);
 
   const [busyAnswer, setBusyAnswer] = useState(5);
   const [activityAnswer, setActivityAnswer] = useState(5);
+  const [checkedItems, setCheckedItems] = useState({
+    location: false,
+    health: false,
+    calendar: false,
+  });
+  const [twitterHandle, setTwitterHandle] = useState('');
+  const [baephone, setBaephone] = useState('');
 
-  const questions = [
+  let questions = [
     {
-      progressIndicatorStep: 0,
+      progressIndicatorStep: [true, false, false, false, false],
       render: (
         <View>
           <Text style={TextStyles.H2}>Hi {name}!</Text>
@@ -43,7 +111,7 @@ const OnboardingScreen = ({ navigation }) => {
       ),
     },
     {
-      progressIndicatorStep: 0,
+      progressIndicatorStep: [true, false, false, false, false],
       render: (
         <View style={styles.sliderQuestionContainer}>
           <Text style={TextStyles.H2}>
@@ -58,7 +126,7 @@ const OnboardingScreen = ({ navigation }) => {
       ),
     },
     {
-      progressIndicatorStep: 1,
+      progressIndicatorStep: [false, true, false, false, false],
       render: (
         <View style={styles.sliderQuestionContainer}>
           <Text style={TextStyles.H2}>
@@ -74,25 +142,139 @@ const OnboardingScreen = ({ navigation }) => {
       ),
     },
     {
-      progressIndicatorStep: 2,
+      progressIndicatorStep: [false, false, true, false, false],
       render: loveLanguages ? (
         <View>
           <Text style={TextStyles.H2}>
             Now, pick your primary love language:
           </Text>
-          {loveLanguages.map((language, k) => {
-            return (
-              <Text key={k} style={TextStyles.B1}>
-                {language.title}
-              </Text>
-            );
-          })}
+          <View style={{ marginTop: 40 }}>
+            {loveLanguages.map((language, k) => {
+              return (
+                <RadioOption
+                  key={language.id}
+                  title={language.title}
+                  body={language.description}
+                  selected={language.selected}
+                  onPress={() => {
+                    setLoveLanguages(
+                      loveLanguages.map(l => {
+                        let value = { ...l };
+                        if (l.id === language.id) {
+                          value.selected = true;
+                        } else {
+                          value.selected = false;
+                        }
+                        return value;
+                      }),
+                    );
+                  }}
+                />
+              );
+            })}
+          </View>
         </View>
       ) : (
         <Text style={TextStyles.H2}>loading...</Text>
       ),
     },
+    {
+      progressIndicatorStep: [false, false, false, true, false],
+      render: (
+        <View>
+          <Text style={TextStyles.H2}>Help me help you.</Text>
+          <Text style={TextStyles.B1}>
+            Now that I know more about what fuels your fire, I'd like to be able
+            to personalize your suggestions on a daily basis.
+          </Text>
+          <View style={{ marginTop: 40 }}>
+            <Checkbox
+              title="Allow location access"
+              body={
+                "I'd prefer to give you and bae the green light when you are actually near each other..."
+              }
+              checked={checkedItems.location}
+              onPress={() =>
+                setCheckedItems({
+                  ...checkedItems,
+                  location: !checkedItems.location,
+                })
+              }
+            />
+            <Checkbox
+              title="Allow access to Apple Health"
+              body="Learning about your sleep patterns and activity can help me suggest the best moments."
+              checked={checkedItems.health}
+              onPress={() =>
+                setCheckedItems({
+                  ...checkedItems,
+                  health: !checkedItems.health,
+                })
+              }
+            />
+            <Checkbox
+              title="Sync your calendar"
+              body={
+                "Gotta know when you're busy in order to know when you should get busy!"
+              }
+              checked={checkedItems.calendar}
+              onPress={() =>
+                setCheckedItems({
+                  ...checkedItems,
+                  calendar: !checkedItems.calendar,
+                })
+              }
+            />
+          </View>
+          <Text style={[TextStyles.B1, { marginTop: 29 }]}>
+            Your Twitter feed
+          </Text>
+          <Text style={[TextStyles.B2, { color: Colors.black4 }]}>
+            You might not realize how what you see or read can affect your mood.
+            I'll help see if it's souring your vibe.
+          </Text>
+          <BrandTextInput
+            label={"What's your Twitter handle?"}
+            value={twitterHandle}
+            onChangeValue={setTwitterHandle}
+            style={{ marginTop: 8 }}
+          />
+        </View>
+      ),
+    },
+    {
+      progressIndicatorStep: [false, false, false, false, true],
+      render: (
+        <View style={styles.sliderQuestionContainer}>
+          <View>
+            <Text style={TextStyles.H2}>
+              Last step! Let's put the BAE in BaeWatch.
+            </Text>
+            <Text style={TextStyles.B1}>
+              Invite your partner so I can compare your moods and needs, and
+              help you both find moments to connect.
+            </Text>
+          </View>
+          <BrandTextInput
+            label={"What's bae's cell?"}
+            value={baephone}
+            onChangeValue={setBaephone}
+          />
+        </View>
+      ),
+    },
   ];
+
+  if (userWasInvited) {
+    // don't need the last question
+    questions.pop();
+    questions = questions.map(q => {
+      return {
+        ...q,
+        progressIndicatorStep: q.progressIndicatorStep.slice(0, -1),
+      };
+    });
+  }
 
   const reducer = (state, action) => {
     switch (action.type) {
@@ -118,6 +300,47 @@ const OnboardingScreen = ({ navigation }) => {
   };
   const [progressState, dispatch] = useReducer(reducer, initialProgressState);
 
+  const submit = async () => {
+    const jwt = await AsyncStorage.getItem('userToken');
+    const url = `http://10.1.10.163:1337/users/${initialUserData.id}`;
+    const payload = {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+      body: JSON.stringify({
+        twitter: twitterHandle,
+        activity: activityAnswer,
+        busy: busyAnswer,
+        languages: loveLanguages.filter(l => l.selected)[0],
+        baephone: baephone,
+      }),
+    };
+    try {
+      const response = await fetch(url, payload);
+      const jsonResponse = await response.json();
+      console.log(jsonResponse);
+      if (jsonResponse.confirmed) {
+        console.log('success');
+      } else {
+        throw Error;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const submitButton = () => {
+    const title = userWasInvited ? 'Done' : 'Invite your bae';
+    if (progressState.screenNumber === questions.length - 1) {
+      return <BrandButton variant="primary" title={title} onPress={submit} />;
+    } else {
+      return null;
+    }
+  };
+
   return (
     <View>
       <StatusBar barStyle={'light-content'} />
@@ -128,23 +351,30 @@ const OnboardingScreen = ({ navigation }) => {
               style={styles.bae}
               source={require('@assets/images/bae.png')}
             />
-            <ProgressIndicator progress={[true, true, true, false, false]} />
+            <ProgressIndicator
+              progress={
+                questions[progressState.screenNumber].progressIndicatorStep
+              }
+            />
           </View>
           <View style={styles.questionContainer}>
             {questions[progressState.screenNumber].render}
           </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <ArrowButton
-            highlight={false}
-            orientation="up"
-            onPress={() => dispatch({ type: 'goBackward' })}
-          />
-          <ArrowButton
-            highlight={true}
-            orientation="down"
-            onPress={() => dispatch({ type: 'goForward' })}
-          />
+        <View style={styles.lowerContainer}>
+          <View style={{ flexGrow: 1 }}>{submitButton()}</View>
+          <View style={styles.buttonContainer}>
+            <ArrowButton
+              highlight={progressState.screenNumber > 0}
+              orientation="up"
+              onPress={() => dispatch({ type: 'goBackward' })}
+            />
+            <ArrowButton
+              highlight={progressState.screenNumber < questions.length - 1}
+              orientation="down"
+              onPress={() => dispatch({ type: 'goForward' })}
+            />
+          </View>
         </View>
       </View>
     </View>
@@ -171,10 +401,16 @@ const styles = StyleSheet.create({
     height: 294,
     justifyContent: 'space-between',
   },
+  lowerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 36,
+  },
   buttonContainer: {
     height: 80,
+    marginLeft: 24,
     justifyContent: 'space-between',
-    marginBottom: 36,
     alignItems: 'flex-end',
   },
   bae: {

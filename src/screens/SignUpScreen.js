@@ -12,9 +12,6 @@ const SignUpScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const signUp = async () => {
-    navigation.navigate('Onboarding', {
-      name: name,
-    }); // TODO: placeholder
     const url = 'http://10.1.10.163:1337/auth/local/register';
     const payload = {
       method: 'POST',
@@ -24,6 +21,7 @@ const SignUpScreen = ({ navigation }) => {
       },
       body: JSON.stringify({
         email: email,
+        username: email,
         password: password,
         phone: number,
         name: name,
@@ -38,7 +36,7 @@ const SignUpScreen = ({ navigation }) => {
       const { jwt, user } = jsonResponse;
       if (user?.confirmed) {
         await AsyncStorage.setItem('userToken', jwt);
-        navigation.navigate('Onboarding');
+        navigation.navigate('Onboarding', { user: user, name: name });
       } else {
         throw Error;
       }
