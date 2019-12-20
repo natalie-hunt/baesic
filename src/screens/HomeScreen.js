@@ -56,6 +56,11 @@ const HomeScreen = ({ navigation }) => {
     }
 
   };
+
+  const signOut = async () => {
+    await AsyncStorage.clear();
+    navigation.navigate('Auth');
+  }
   
   useEffect(() => {
     const doCheck = async () => {
@@ -83,7 +88,8 @@ const HomeScreen = ({ navigation }) => {
               onChangeValue={updateBaephone}
             />
             <BrandButton title="Send Another Invite" onPress={sendInvite} variant="primary" />
-            <BrandButton title="Refresh" onPress={refresh} variant="primary" />
+            <BrandButton title="Refresh" onPress={checkBaeConfirmation} variant="primary" />
+            <BrandButton title="Sign Out" onPress={signOut} variant="primary" />
             <Text style={styles.subText}>Scratch That. Try A Different Number</Text>
           </View>
         </View>

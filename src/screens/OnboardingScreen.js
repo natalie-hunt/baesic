@@ -1,4 +1,5 @@
 import React, { useState, useReducer, useEffect } from 'react';
+import AppleHealthKit from 'rn-apple-healthkit';
 import {
   View,
   Text,
@@ -86,6 +87,47 @@ const OnboardingScreen = ({ navigation }) => {
 
     fetchUsers();
   }, []);
+
+  const [steps, setSteps] = useState(0);
+  const [sleepHours, setSleepHours] = useState(0);
+  const connectHealthKit = () => {
+    const PERMS = AppleHealthKit.Constants.Permissions;
+    const options = {
+      permissions: {
+        read: [
+          PERMS.StepCount,
+          PERMS.SleepAnalysis,
+        ],
+      },
+    };
+
+    AppleHealthKit.initHealthKit(options, (err, results) => {
+      if (err) {
+        console.log('error initializing Healthkit: ', err);
+        return;
+      }
+
+      AppleHealthKit.getStepCount(null, (err, results) => {
+        console.log(results);
+        setSteps(results.value);
+      });
+
+      let yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const sleepOptions = {
+        startDate: (yesterday).toISOString(),
+        endDate: (new Date()).toISOString(),
+      };
+      AppleHealthKit.getSleepSamples(sleepOptions, (err, results) => {
+        if (err) {
+          console.log('error reading sleep data: ', err);
+          return;
+        }
+
+        console.log(results);
+      })
+    });
+  }
 
   const [busyAnswer, setBusyAnswer] = useState(5);
   const [activityAnswer, setActivityAnswer] = useState(5);
@@ -205,12 +247,13 @@ const OnboardingScreen = ({ navigation }) => {
               title="Allow access to Apple Health"
               body="Learning about your sleep patterns and activity can help me suggest the best moments."
               checked={checkedItems.health}
-              onPress={() =>
+              onPress={() => {
                 setCheckedItems({
                   ...checkedItems,
                   health: !checkedItems.health,
-                })
-              }
+                });
+                connectHealthKit();
+              }}
             />
             <Checkbox
               title="Sync your calendar"
@@ -316,6 +359,8 @@ const OnboardingScreen = ({ navigation }) => {
         busy: busyAnswer,
         languages: loveLanguages.filter(l => l.selected)[0],
         baephone: baephone,
+        steps: steps,
+        sleep: sleepHours,
       }),
     };
     try {
