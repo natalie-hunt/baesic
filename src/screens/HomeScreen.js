@@ -12,7 +12,7 @@ const HomeScreen = ({ navigation }) => {
   let [user, setUser] = useState({});
   let [jwt, setJwt] = useState('');
   const [steps, setSteps] = useState(0);
-  const [eventCount, setEvents] = useState(0);
+  const [events, setEvents] = useState(0);
   const [sleepHours, setSleepHours] = useState(0);
 
   const [goStatus, setGoStatus] = useState('maybe');
@@ -118,7 +118,7 @@ const HomeScreen = ({ navigation }) => {
 
   const updateUser = async () => {
     connectHealthKit();
-    connectCalendars();
+    await connectCalendars();
 
     const jwt = await AsyncStorage.getItem('userToken');
     const url = `http://10.1.10.163:1337/users/${user._id}`;
@@ -132,7 +132,7 @@ const HomeScreen = ({ navigation }) => {
       body: JSON.stringify({
         steps: steps,
         sleep: sleepHours,
-        events: eventCount
+        events: events,
       }),
     };
     try {
@@ -222,7 +222,7 @@ const HomeScreen = ({ navigation }) => {
         console.log('end', end);
         RNCalendarEvents.fetchAllEvents(start, end, []).then(_events => {
           setEvents(_events.length);
-          console.log('events', eventCount);
+          console.log('events', events);
         });
       }
     });
