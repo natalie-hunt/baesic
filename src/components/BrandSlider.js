@@ -8,8 +8,8 @@ const BrandSlider = ({ value, onValueChange, labels, style }) => {
     <View style={style}>
       <Slider
         value={value}
-        maximumValue={10}
-        minimumValue={0}
+        maximumValue={1}
+        minimumValue={-1}
         onValueChange={v => onValueChange(v)}
         thumbTintColor={Colors.offWhite2}
         minimumTrackTintColor={Colors.offWhite1}

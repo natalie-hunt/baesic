@@ -7,6 +7,7 @@ import {
   StyleSheet,
   StatusBar,
   AsyncStorage,
+  ScrollView,
 } from 'react-native';
 import { TextStyles, Colors } from '@style';
 import {
@@ -55,6 +56,7 @@ const OnboardingScreen = ({ navigation }) => {
   }, []);
 
   const [userWasInvited, setUserWasInvited] = useState(undefined);
+  const [baeConfirmed, setBaeConfirmed] = useState(false);
   useEffect(() => {
     const fetchUsers = async () => {
       const jwt = await AsyncStorage.getItem('userToken');
@@ -70,19 +72,25 @@ const OnboardingScreen = ({ navigation }) => {
       try {
         const response = await fetch(url, payload);
         const jsonResponse = await response.json();
+        console.log('users: ', jsonResponse);
+        console.log('initial user data: ', initialUserData);
         const inviters = jsonResponse.filter(
           u => u.baephone === initialUserData.phone,
         );
         if (inviters.length > 0) {
-          setBaenumber(inviters[0].number);
+          setBaephone(inviters[0].phone);
+          setBaeConfirmed(true);
           setUserWasInvited(true);
         } else {
           setUserWasInvited(false);
+          setBaeConfirmed(false);
         }
       } catch (error) {
         setUserWasInvited(false);
         console.log(error);
       }
+      console.log('invited: ', userWasInvited);
+      console.log('baephone: ', baephone);
     };
 
     fetchUsers();
@@ -129,8 +137,8 @@ const OnboardingScreen = ({ navigation }) => {
     });
   }
 
-  const [busyAnswer, setBusyAnswer] = useState(5);
-  const [activityAnswer, setActivityAnswer] = useState(5);
+  const [busyAnswer, setBusyAnswer] = useState(0);
+  const [activityAnswer, setActivityAnswer] = useState(0);
   const [checkedItems, setCheckedItems] = useState({
     location: false,
     health: false,
