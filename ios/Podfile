@@ -36,6 +36,8 @@ target 'baesic' do
 
   pod 'RCTAppleHealthKit', :path => '../node_modules/rn-apple-healthkit'
 
+  pod 'react-native-calendar-events', :path => '../node_modules/react-native-calendar-events'
+
   target 'baesicTests' do
     inherit! :search_paths
     # Pods for testing
