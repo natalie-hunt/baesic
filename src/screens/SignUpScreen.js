@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StatusBar, Image, StyleSheet, Text } from 'react-native';
+import { View, KeyboardAvoidingView, StatusBar, Image, StyleSheet, Text } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { TextStyles, Colors } from '@style';
 import { BrandTextInput, BrandButton } from '@components';
@@ -46,7 +46,9 @@ const SignUpScreen = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <KeyboardAvoidingView
+      behavior="padding"
+    >
       <StatusBar barStyle={'light-content'} />
       <View style={styles.container}>
         <View style={styles.titleContainer}>
@@ -93,7 +95,7 @@ const SignUpScreen = ({ navigation }) => {
           />
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -112,6 +114,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   c2aContainer: {
+    marginTop: 16,
     marginBottom: 48,
     height: 104,
     justifyContent: 'space-between',
