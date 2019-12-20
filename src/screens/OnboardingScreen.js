@@ -7,7 +7,7 @@ import {
   StyleSheet,
   StatusBar,
   AsyncStorage,
-  ScrollView,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { TextStyles, Colors } from '@style';
 import {
@@ -398,7 +398,7 @@ const OnboardingScreen = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <KeyboardAvoidingView behavior='position'>
       <StatusBar barStyle={'light-content'} />
       <View style={styles.container}>
         <View>
@@ -433,7 +433,7 @@ const OnboardingScreen = ({ navigation }) => {
           </View>
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
