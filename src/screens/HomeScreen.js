@@ -12,7 +12,7 @@ const HomeScreen = ({ navigation }) => {
   let [user, setUser] = useState({});
   let [jwt, setJwt] = useState('');
   const [steps, setSteps] = useState(0);
-  const [events, setEvents] = useState(0);
+  const [eventCount, setEvents] = useState(0);
   const [sleepHours, setSleepHours] = useState(0);
 
   const [goStatus, setGoStatus] = useState('maybe');
@@ -121,7 +121,7 @@ const HomeScreen = ({ navigation }) => {
     connectCalendars();
 
     const jwt = await AsyncStorage.getItem('userToken');
-    const url = `http://10.1.10.163:1337/users/${user.id}`;
+    const url = `http://10.1.10.163:1337/users/${user._id}`;
     const payload = {
       method: 'PUT',
       headers: {
@@ -132,7 +132,7 @@ const HomeScreen = ({ navigation }) => {
       body: JSON.stringify({
         steps: steps,
         sleep: sleepHours,
-        events: events
+        events: eventCount
       }),
     };
     try {
@@ -215,9 +215,15 @@ const HomeScreen = ({ navigation }) => {
         RNCalendarEvents.authorizeEventStore().then(u => console.log(u));
       }
       if(status == 'authorized') {
-        RNCalendarEvents.fetchAllEvents(new Date(), new Date(), []).then(events => {
-          setEvents(events.length);
-          console.log('events', events);
+        const start = new Date();
+        start.setHours(0,0,0,0);
+        const end = new Date();
+        end.setHours(23,59,59,999);
+        console.log('start', start);
+        console.log('end', end);
+        RNCalendarEvents.fetchAllEvents(start, end, []).then(_events => {
+          setEvents(_events.length);
+          console.log('events', eventCount);
         });
       }
     });
