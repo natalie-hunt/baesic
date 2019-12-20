@@ -367,6 +367,7 @@ const OnboardingScreen = ({ navigation }) => {
         busy: busyAnswer,
         languages: loveLanguages.filter(l => l.selected)[0],
         baephone: baephone,
+        baeConfirmed: baeConfirmed,
         steps: steps,
         sleep: sleepHours,
       }),
@@ -377,6 +378,8 @@ const OnboardingScreen = ({ navigation }) => {
       console.log(jsonResponse);
       if (jsonResponse.confirmed) {
         console.log('success');
+        console.log(jsonResponse);
+        navigation.navigate('Home');
       } else {
         throw Error;
       }
