@@ -12,9 +12,6 @@ const SignUpScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const signUp = async () => {
-    navigation.navigate('Onboarding', {
-      name: name,
-    }); // TODO: placeholder
     const url = 'http://10.1.10.163:1337/auth/local/register';
     const payload = {
       method: 'POST',

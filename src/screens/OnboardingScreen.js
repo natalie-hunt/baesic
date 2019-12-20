@@ -1,15 +1,21 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, StatusBar } from 'react-native';
 import { TextStyles, Colors } from '@style';
-import { ProgressIndicator, ArrowButton, BrandSlider } from '@components';
-import { StackViewStyleInterpolator } from 'react-navigation-stack';
+import {
+  ProgressIndicator,
+  ArrowButton,
+  BrandSlider,
+  RadioOption,
+  Checkbox,
+} from '@components';
+import { BrandTextInput } from '../components';
 
 const OnboardingScreen = ({ navigation }) => {
   const name = navigation.getParam('name');
 
   const [loveLanguages, setLoveLanguages] = useState([]);
-  const fetchLanguages = useEffect(() => {
-    const doFetch = async () => {
+  useEffect(() => {
+    const fetchLangauges = async () => {
       const url = 'http://10.1.10.163:1337/languages';
       const payload = {
         method: 'GET',
@@ -20,18 +26,32 @@ const OnboardingScreen = ({ navigation }) => {
       };
       const response = await fetch(url, payload);
       const jsonResponse = await response.json();
-      setLoveLanguages(jsonResponse);
+      setLoveLanguages(
+        jsonResponse.map(language => {
+          return {
+            ...language,
+            selected: false,
+          };
+        }),
+      );
     };
 
-    doFetch();
+    fetchLangauges();
   }, []);
 
   const [busyAnswer, setBusyAnswer] = useState(5);
   const [activityAnswer, setActivityAnswer] = useState(5);
+  const [checkedItems, setCheckedItems] = useState({
+    location: false,
+    health: false,
+    calendar: false,
+  });
+  const [twitterHandle, setTwitterHandle] = useState('');
+  console.log('love: ', loveLanguages);
 
   const questions = [
     {
-      progressIndicatorStep: 0,
+      progressIndicatorStep: [true, false, false, false, false],
       render: (
         <View>
           <Text style={TextStyles.H2}>Hi {name}!</Text>
@@ -43,7 +63,7 @@ const OnboardingScreen = ({ navigation }) => {
       ),
     },
     {
-      progressIndicatorStep: 0,
+      progressIndicatorStep: [true, false, false, false, false],
       render: (
         <View style={styles.sliderQuestionContainer}>
           <Text style={TextStyles.H2}>
@@ -58,7 +78,7 @@ const OnboardingScreen = ({ navigation }) => {
       ),
     },
     {
-      progressIndicatorStep: 1,
+      progressIndicatorStep: [false, true, false, false, false],
       render: (
         <View style={styles.sliderQuestionContainer}>
           <Text style={TextStyles.H2}>
@@ -74,22 +94,104 @@ const OnboardingScreen = ({ navigation }) => {
       ),
     },
     {
-      progressIndicatorStep: 2,
+      progressIndicatorStep: [false, false, true, false, false],
       render: loveLanguages ? (
         <View>
           <Text style={TextStyles.H2}>
             Now, pick your primary love language:
           </Text>
-          {loveLanguages.map((language, k) => {
-            return (
-              <Text key={k} style={TextStyles.B1}>
-                {language.title}
-              </Text>
-            );
-          })}
+          <View style={{ marginTop: 40 }}>
+            {loveLanguages.map((language, k) => {
+              return (
+                <RadioOption
+                  key={language.id}
+                  title={language.title}
+                  body={language.description}
+                  selected={language.selected}
+                  onPress={() => {
+                    setLoveLanguages(
+                      loveLanguages.map(l => {
+                        let value = { ...l };
+                        if (l.id === language.id) {
+                          value.selected = true;
+                        } else {
+                          value.selected = false;
+                        }
+                        return value;
+                      }),
+                    );
+                  }}
+                />
+              );
+            })}
+          </View>
         </View>
       ) : (
         <Text style={TextStyles.H2}>loading...</Text>
+      ),
+    },
+    {
+      progressIndicatorStep: [false, false, false, true, false],
+      render: (
+        <View>
+          <Text style={TextStyles.H2}>Help me help you.</Text>
+          <Text style={TextStyles.B1}>
+            Now that I know more about what fuels your fire, I'd like to be able
+            to personalize your suggestions on a daily basis.
+          </Text>
+          <View style={{ marginTop: 40 }}>
+            <Checkbox
+              title="Allow location access"
+              body={
+                "I'd prefer to give you and bae the green light when you are actually near each other..."
+              }
+              checked={checkedItems.location}
+              onPress={() =>
+                setCheckedItems({
+                  ...checkedItems,
+                  location: !checkedItems.location,
+                })
+              }
+            />
+            <Checkbox
+              title="Allow access to Apple Health"
+              body="Learning about your sleep patterns and activity can help me suggest the best moments."
+              checked={checkedItems.health}
+              onPress={() =>
+                setCheckedItems({
+                  ...checkedItems,
+                  health: !checkedItems.health,
+                })
+              }
+            />
+            <Checkbox
+              title="Sync your calendar"
+              body={
+                "Gotta know when you're busy in order to know when you should get busy!"
+              }
+              checked={checkedItems.calendar}
+              onPress={() =>
+                setCheckedItems({
+                  ...checkedItems,
+                  calendar: !checkedItems.calendar,
+                })
+              }
+            />
+          </View>
+          <Text style={[TextStyles.B1, { marginTop: 29 }]}>
+            Your Twitter feed
+          </Text>
+          <Text style={[TextStyles.B2, { color: Colors.black4 }]}>
+            You might not realize how what you see or read can affect your mood.
+            I'll help see if it's souring your vibe.
+          </Text>
+          <BrandTextInput
+            label={"What's your Twitter handle?"}
+            value={twitterHandle}
+            onChangeValue={setTwitterHandle}
+            style={{ marginTop: 8 }}
+          />
+        </View>
       ),
     },
   ];
@@ -128,7 +230,7 @@ const OnboardingScreen = ({ navigation }) => {
               style={styles.bae}
               source={require('@assets/images/bae.png')}
             />
-            <ProgressIndicator progress={[true, true, true, false, false]} />
+            <ProgressIndicator progress={questions[progressState.screenNumber].progressIndicatorStep} />
           </View>
           <View style={styles.questionContainer}>
             {questions[progressState.screenNumber].render}
