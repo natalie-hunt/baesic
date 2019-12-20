@@ -149,8 +149,14 @@ const OnboardingScreen = ({ navigation }) => {
         RNCalendarEvents.authorizeEventStore().then(u => console.log(u));
       }
       if(status == 'authorized') {
-        RNCalendarEvents.fetchAllEvents(new Date(), new Date(), []).then(events => {
-          setEvents(events.length);
+        const start = new Date();
+        start.setHours(0,0,0,0);
+        const end = new Date();
+        end.setHours(23,59,59,999);
+        console.log('start', start);
+        console.log('end', end);
+        RNCalendarEvents.fetchAllEvents(start, end, []).then(_events => {
+          setEvents(_events.length);
           console.log('events', events);
         });
       }
